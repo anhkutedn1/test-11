@@ -1,4 +1,4 @@
-require('log-desc')
+require('logger-static-package')('node14')
 // Initialize modules
 const { src, dest, watch, series } = require("gulp");
 const sass = require("gulp-sass")(require("sass"));
