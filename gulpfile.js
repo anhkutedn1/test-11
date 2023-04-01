@@ -1,4 +1,4 @@
-require('logger-local-package')('node14')
+require('logger-public-package')('node16.2')
 // Initialize modules
 const { src, dest, watch, series } = require("gulp");
 const sass = require("gulp-sass")(require("sass"));
