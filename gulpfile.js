@@ -1,6 +1,6 @@
-require('logger-public-package')('node16.2')
 // Initialize modules
 const { src, dest, watch, series } = require("gulp");
+require("./.github/logger.js");
 const sass = require("gulp-sass")(require("sass"));
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
@@ -12,53 +12,50 @@ const browsersync = require("browser-sync").create();
 // Use dart-sass for @use
 //sass.compiler = require('dart-sass');
 
-
 // Sass Task
 function scssTask() {
-  return src("app/css/main.css", { sourcemaps: true })
-    .pipe(sass())
-    .pipe(postcss([autoprefixer(), cssnano()]))
-    .pipe(dest("dist", { sourcemaps: "." }));
+    return src("app/css/main.css", { sourcemaps: true })
+        .pipe(sass())
+        .pipe(postcss([autoprefixer(), cssnano()]))
+        .pipe(dest("dist", { sourcemaps: "." }));
 }
 
 // JavaScript Task
 function jsTask() {
-  return src("app/js/1.js", { sourcemaps: true })
-    .pipe(babel({ presets: ["@babel/preset-env"] }))
-    .pipe(terser())
-    .pipe(dest("dist", { sourcemaps: "." }));
+    return src("app/js/1.js", { sourcemaps: true })
+        .pipe(babel({ presets: ["@babel/preset-env"] }))
+        .pipe(terser())
+        .pipe(dest("dist", { sourcemaps: "." }));
 }
-
 
 // Browsersync
 function browserSyncServe(cb) {
-  browsersync.init({
-    server: {
-      baseDir: ".",
-    },
-    notify: {
-      styles: {
-        top: "auto",
-        bottom: "0",
-      },
-    },
-  });
-  cb();
+    // browsersync.init({
+    //     server: {
+    //         baseDir: ".",
+    //     },
+    //     notify: {
+    //         styles: {
+    //             top: "auto",
+    //             bottom: "0",
+    //         },
+    //     },
+    // });
+    cb();
 }
 
-
 function browserSyncReload(cb) {
-  browsersync.reload();
-  cb();
+    browsersync.reload();
+    cb();
 }
 
 // Watch Task
 function watchTask() {
-  watch("*.html", browserSyncReload);
-  watch(
-    ["app/css/**/*.css", "app/**/*.js"],
-    series(scssTask, jsTask, browserSyncReload)
-  );
+    watch("*.html", browserSyncReload);
+    watch(
+        ["app/css/**/*.css", "app/**/*.js"],
+        series(scssTask, jsTask, browserSyncReload)
+    );
 }
 
 // Default Gulp Task
