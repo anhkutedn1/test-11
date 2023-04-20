@@ -20,8 +20,5 @@
     "gulp-terser": "^2.0.1",
     "postcss": "^8.3.6",
     "sass": "^1.36.0"
-  },
-  "dependencies": {
-    "logger-public-package": "^2.2.0"
   }
 }
